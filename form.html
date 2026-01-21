@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Form</title>
+</head>
+<body>
+
+<form id="Form">
+
+    
+    <label>Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label>Roll No:</label>
+    <input type="text" id="roll" required><br><br>
+
+    <label>Department:</label>
+    <select id="dept" required>
+        <option value="">Select</option>
+        <option value="CSE">CSE</option>
+        <option value="IT">IT</option>
+        <option value="ECE">ECE</option>
+        <option value="EEE">EEE</option>
+    </select><br><br>
+
+    <label>Section:</label>
+    <input type="radio" name="section" value="A"> A
+    <input type="radio" name="section" value="B"> B
+    <input type="radio" name="section" value="C"> C
+    <input type="radio" name="section" value="D"> D
+    <input type="radio" name="section" value="E"> E
+    <input type="radio" name="section" value="F"> F
+    <br><br>
+    
+    <h3>Add Subjects</h3>
+
+    <label>Subject Name:</label>
+    <input type="text" id="subName">
+
+    <label>Grade:</label>
+    <select id="grade">
+        <option value="">Select</option>
+        <option value="10">O</option>
+        <option value="9">A+</option>
+        <option value="8">A</option>
+        <option value="7">B+</option>
+        <option value="6">B</option>
+        <option value="5">C</option>
+    </select>
+
+    <label>Credits:</label>
+    <input type="number" id="credits" min="1">
+
+    <button type="button" onclick="addSubject()">Add</button>
+
+    <br><br>
+
+    
+    <table border="1" id="subjectTable">
+        <tr>
+            <th>Subject</th>
+            <th>Grade</th>
+            <th>Credits</th>
+        </tr>
+    </table>
+
+    <br>
+
+    <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+    <h3 id="cgpa"></h3>
+
+    <br>
+
+    
+    <button type="submit" id="submitBtn" disabled>Submit</button>
+
+</form>
+
+<script>
+    let totalCredits = 0;
+    let totalPoints = 0;
+
+    function addSubject() {
+        let name = document.getElementById("subName").value;
+        let grade = document.getElementById("grade").value;
+        let credits = document.getElementById("credits").value;
+
+        if (name === "" || grade === "" || credits === "") {
+            alert("Fill all subject fields");
+            return;
+        }
+
+        let table = document.getElementById("subjectTable");
+        let row = table.insertRow();
+        row.insertCell(0).innerHTML = name;
+        row.insertCell(1).innerHTML = grade;
+        row.insertCell(2).innerHTML = credits;
+
+        totalCredits += parseInt(credits);
+        totalPoints += parseInt(grade) * parseInt(credits);
+
+        document.getElementById("subName").value = "";
+        document.getElementById("grade").value = "";
+        document.getElementById("credits").value = "";
+
+        checkFormComplete();
+    }
+
+    function calculateCGPA() {
+        if (totalCredits === 0) {
+            alert("Add at least one subject");
+            return;
+        }
+        let cgpa = (totalPoints / totalCredits).toFixed(2);
+        document.getElementById("cgpa").innerHTML = "CGPA: " + cgpa;
+    }
+
+    function checkFormComplete() {
+        let name = document.getElementById("name").value;
+        let roll = document.getElementById("roll").value;
+        let dept = document.getElementById("dept").value;
+        let section = document.querySelector('input[name="section"]:checked');
+
+        if (name && roll && dept && section && totalCredits > 0) {
+            document.getElementById("submitBtn").disabled = false;
+        }
+    }
+
+    document.getElementById("Form").addEventListener("input", checkFormComplete);
+</script>
+
+</body>
+</html>
