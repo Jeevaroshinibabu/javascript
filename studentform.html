@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+</head>
+<body>
+    <form id="Form">
+        <label>Name:</label>
+        <input type="text" id="name" required><br><br>
+        <label>Roll No:</label>
+        <input type="text" id="roll" required><br><br>
+        <label>Email:</label>
+        <input type="text" id="email" required><br><br>
+        <label>Department:</label>
+        <select id="dept" required>
+            <option value="">Select</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="ECE">ECE</option>
+            <option value="EEE">EEE</option>
+        </select><br><br>
+        <label>Section:</label>
+        <input type="radio" name="section" value="A"> A
+        <input type="radio" name="section" value="B"> B
+        <input type="radio" name="section" value="C"> C
+        <input type="radio" name="section" value="D"> D
+        <input type="radio" name="section" value="E"> E
+        <input type="radio" name="section" value="F"> F
+        <br><br>
+        <label>CGPA:</label>
+        <input type="text" id="cgpa" required><br><br>
+        <button type="button" onclick="addRow()">Add</button>
+    </form>
+    <table id="Table" border="1"> 
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>ROLL NO</th>
+                <th>EMAIL</th>
+                <th>DEPARTMENT</th>
+                <th>SECTION</th>
+                <th>CGPA</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <script>
+        function addRow() {
+            let name = document.getElementById("name").value;
+            let roll = document.getElementById("roll").value;
+            let email = document.getElementById("email").value;
+            let dept = document.getElementById("dept").value;
+            let section = document.querySelector('input[name="section"]:checked');
+            let cgpa = document.getElementById("cgpa").value;
+
+            
+            if (name === "" || dept === "" || roll === "" || email === "" || !section || cgpa === "") {
+                alert("Please enter all fields");
+                return;
+            }
+
+            let tableBody = document.getElementById("tableBody"); 
+            let row = tableBody.insertRow();
+            row.insertCell(0).innerHTML = name;
+            row.insertCell(1).innerHTML = roll;
+            row.insertCell(2).innerHTML = email;
+            row.insertCell(3).innerHTML = dept;
+            row.insertCell(4).innerHTML = section.value; 
+            row.insertCell(5).innerHTML = cgpa;
+
+            
+            document.getElementById("Form").reset();
+        }
+    </script>
+</body>
+</html>
+
